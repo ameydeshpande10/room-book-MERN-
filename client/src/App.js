@@ -19,11 +19,11 @@ const App = () => {
   async function signup(e) {
     try {
       await axios
-        .post("http://localhost:3001/user/sign-up", {
-          name,
-          email,
-          contact_number,
-          address,
+        .get("http://localhost:3001/user-room/save", {
+          name: name,
+          email: email,
+          contact_number: contact_number,
+          address: address,
           user_id: name,
           number_of_persons: number_of_person,
           type_of_room: room_type,
