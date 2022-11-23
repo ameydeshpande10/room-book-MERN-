@@ -52,6 +52,16 @@ const App = () => {
     }
   }
 
+  function calculateCost() {
+    let sum = 0;
+    if (room_type.length != 0) {
+      if (room_type === "a") {
+        sum = parseInt(number_of_person) * 1000;
+        console.log(sum);
+      }
+    }
+  }
+
   return (
     <>
       <div className="container">
@@ -126,7 +136,7 @@ const App = () => {
           </div>
           <div className="d-flex justify-content-around">
             <button
-              type="submit"
+              type="button"
               className="btn btn-primary"
               onClick={calculatePrice}
             >
