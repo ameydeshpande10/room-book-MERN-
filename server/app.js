@@ -20,7 +20,7 @@ app.use(
 
 app.use(express.json());
 
-app.get("/user-room/save", (req, res) => {
+app.post("/user-room/save", async (req, res) => {
   const {
     name,
     email,
@@ -32,25 +32,30 @@ app.get("/user-room/save", (req, res) => {
     type_of_room,
   } = req.body;
 
-  const user = new User({
-    name,
-    email,
-    contact_number,
-    address,
-  });
+  try {
+    const user = new User({
+      name,
+      email,
+      contact_number,
+      address,
+    });
 
-  user.save();
+    await user.save();
 
-  const room = new Room({
-    user_id,
-    number_of_persons,
-    number_of_nights,
-    type_of_room,
-  });
+    const room = new Room({
+      user_id,
+      number_of_persons,
+      number_of_nights,
+      type_of_room,
+    });
 
-  room.save();
-  console.log("user added");
-  res.end("Room booekd");
+    await room.save();
+    console.log("user added");
+
+    res.status(201).json("user added Room booekd");
+  } catch (err) {
+    console.log(err.response);
+  }
 });
 
 //Connecting to MongoDB atlas

@@ -15,11 +15,12 @@ const App = () => {
   const [number_of_person, setNumber_of_person] = useState();
   const [room_type, setRoomType] = useState();
   const [number_of_nights, setNumber_of_nights] = useState();
+  const [total, setTotal] = useState();
 
   async function signup(e) {
     try {
       await axios
-        .get("http://localhost:3001/user-room/save", {
+        .post("http://localhost:3001/user-room/save", {
           name: name,
           email: email,
           contact_number: contact_number,
@@ -34,6 +35,20 @@ const App = () => {
         });
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  function calculatePrice() {
+    const single_bed = 700;
+    const double_bed = 1200;
+    const executive_room = 1400;
+
+    if (room_type == "single_bed") {
+      setTotal(700 * number_of_nights);
+    } else if (room_type == "double_bed") {
+      setTotal(1200 * number_of_nights);
+    } else {
+      setTotal(1400 * number_of_nights);
     }
   }
 
@@ -110,12 +125,17 @@ const App = () => {
             ></input>
           </div>
           <div className="d-flex justify-content-around">
-            <button type="submit" className="btn btn-primary">
+            <button
+              type="submit"
+              className="btn btn-primary"
+              onClick={calculatePrice}
+            >
               Calculate Cost
             </button>
             <button type="submit" className="btn btn-primary" onClick={signup}>
               Submit
             </button>
+            {total && <div>{total}</div>}
           </div>
         </form>
       </div>
